@@ -1,0 +1,35 @@
+Терминал PyCharm:
+
+manage.py migrate # применяем миграции
+manage.py shell # переходим в джанго шелл
+from newapp.models import * # импортируем модули
+
+User1 = User.objects.create_user(username='Vladislav') # создаём первого юзера
+User2 = User.objects.create_user(username='Mary') #  второго юзера
+User1 # проверяем создался ли юзер
+
+Author.objects.create(authorUser=User1) # создаём автора
+author = Author.objects.get(id=1)
+
+category.objects.create(name='IT') # создаём категорию
+
+post.objects.create(author=author, categryType='NW', title='sometitle', text='somebigtext') # создаём пост
+post.objects.get(id=1).title # получаем тайтл
+post.objects.get(id=1).postcategory.add(Category.objects.get(id=1)) # добавляем категорию
+
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='anytextbyauthor') # создаём комментарий
+Comment.objects.get(id=1).like() # Лайкаем коммент
+Comment.objects.get(id=1).dislike() # дизлайкаем коммент
+Comment.objects.get(id=1).dislike() # добавляем второй дизлайк
+Comment.objects.get(id=1).rating # посмотреть рейтинг
+
+
+# химичим с рейтингами
+Author.objects.get(id=1)
+a = Author.objects.get(id=1)
+a.update_reting()
+a.ratingAuthor
+Post.objects.get(id=1).like()
+a.update_reting()
+a = Author.objects.order_by('-ratingAuthor')[:1]
+a
